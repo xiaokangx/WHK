@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.StudentMapper">
+  <select id="findPage" parameterType="studentVo" resultType="studentVo">
+   SELECT s.*,l.name AS 'cname' FROM student s,laoshi l
+   <where>
+    s.`mzrid`=l.`id`
+   <if test="sname!=null and sname!=''">
+    and s.sname like '%${sname}%'
+   </if>
+   <if test="mzrid!=null and mzrid!=0">
+    and s.mzrid=#{mzrid}
+   </if>
+   </where>
+  </select>
+  
+  <select id="findEcharts" resultType="studentVo">
+   SELECT COUNT(s.sid)AS num,l.name AS cname FROM student s,laoshi l 
+   WHERE s.`mzrid`=l.`id` 
+   GROUP BY l.`name`
+  </select>
+  
+</mapper>
